@@ -5,8 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 final ApiServicesProvider = ChangeNotifierProvider((ref) => ApiServices());
+
 final blogProvider = FutureProvider((ref) async {
-  return ref.read(ApiServicesProvider).getData();
+  return ref.watch(ApiServicesProvider).getData();
 });
 
 class ApiServices extends ChangeNotifier {
@@ -46,6 +47,5 @@ class ApiServices extends ChangeNotifier {
         print(e);
       }
     }
-    notifyListeners();
   }
 }

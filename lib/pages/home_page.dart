@@ -15,22 +15,27 @@ class HomePage extends ConsumerWidget {
           title: Text("BlogPost"),
         ),
         body: data.when(
-          data: (data) {
-            return ListView.builder(
-              itemCount: data.length,
-              itemBuilder: ((context, index) {
-                return ListTile(
-                  title: Text(
-                    data[index]["titulo"],
-                  ),
-                  subtitle: Text(
-                    data[index]["contenido"],
-                  ),
-                  trailing: Image.network(
-                    "${data[index]["imagen"]["url"]}",
-                  ),
-                );
-              }),
+          data: (blogs) {
+            return RefreshIndicator(
+              onRefresh: () async {
+                ref.refresh(blogProvider);
+              },
+              child: ListView.builder(
+                itemCount: blogs!.length,
+                itemBuilder: ((context, index) {
+                  return ListTile(
+                    title: Text(
+                      blogs[index]["titulo"],
+                    ),
+                    subtitle: Text(
+                      blogs[index]["contenido"],
+                    ),
+                    trailing: Image.network(
+                      "${blogs[index]["imagen"]["url"]}",
+                    ),
+                  );
+                }),
+              ),
             );
           },
           error: (err, s) => Text(err.toString()),
